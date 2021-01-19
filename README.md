@@ -1,27 +1,42 @@
-# SourceProject
+## Create Library
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.1.
+1. Run `ng g library {name}`, where `{name}` is name of library.
 
-## Development server
+2. Add components to library and add them to `declarations`, `exports` lists in the Module.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+3. Add references for new components/modules to `public-api.ts`.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Packing library via npm
 
-## Build
+1. Change name by adding a prefix: `@{organization}\`, where `{organization}` is path to your organization (or user URL). For example, `@romanyanchuk/test-library`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+2. Add description and author for library in `package.json`, like this:
+   `"description": "Test library", "author": "Roman Yanchuk"`.
 
-## Running unit tests
+3. Add `npm publish` configuration for library:
+   In `package.json` add info about registry.
+   `"publishConfig": { "registry": "{registry-path}" }`.
+   Where `{registry-path}` is URL path to package registry. For example, `https://npm.pkg.github.com/` if you use a `GitHub Packages`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+4. Add info about `Repository` like this:
+   `"repository": { "type": "git", "url": "{path}" }`.
+   Where `{path}` is path to repository where you want to publish a package. For example, `git://github.com/RomanYanchuk/packages.git`.
+5. Run `ng build {library} --prod`, where `{library}` is name of library. For example `TestLibrary`.
 
-## Running end-to-end tests
+6. Run `npm login --registry={registry_url} --scope=@{organization}`, where `{organization}` is path to organization (or user), where you want to publish. For example, `romanyanchuk`. And {registry_url}`is`package registry`path. For example`https://npm.pkg.github.com`.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+7. Run `cd dist/library`, `npm pack`.
 
-## Further help
+8. Run `npm publish`.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## When package updated
+
+Change version of the package if update is needed - `npm version 0.0.0`, where replace 0.0.0 by new version.
+Or you can do it manually in `package.json` before build.
+
+
+## Install package from repository
+Run `npm install @{organization}/{package}@{version}`, where `{organization}` is path to organization (or user), where you published, `{package}` is name of package, `{version}` is version of package in format `0.0.0`. 
+For example, `npm install @romanyanchuk/test-library@0.0.1`.

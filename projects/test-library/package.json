@@ -1,0 +1,20 @@
+{
+  "name": "@romanyanchuk/test-library",
+  "version": "0.0.1",
+  "description": "Test library",
+  "author": "Roman Yanchuk",
+  "peerDependencies": {
+    "@angular/common": "^11.0.9",
+    "@angular/core": "^11.0.9"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/RomanYanchuk/packages.git"
+  }
+}
