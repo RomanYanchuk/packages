@@ -1,5 +1,5 @@
 {
-  "name": "@romanyanchuk/test-library",
+  "name": "test-library",
   "version": "0.0.1",
   "description": "Test library",
   "author": "Roman Yanchuk",
@@ -11,10 +11,6 @@
     "tslib": "^2.0.0"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/RomanYanchuk/packages.git"
+    "registry": "http://localhost:4873/"
   }
 }

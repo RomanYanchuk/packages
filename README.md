@@ -7,36 +7,37 @@
 3. Add references for new components/modules to `public-api.ts`.
 
 
-## Packing library via npm
+## Creating Package Registry and Login
 
-1. Change name by adding a prefix: `@{organization}\`, where `{organization}` is path to your organization (or user URL). For example, `@romanyanchuk/test-library`.
+1. Run `npm install -g verdaccio`
 
-2. Add description and author for library in `package.json`, like this:
+2. Run `docker run -it --rm --name verdaccio -p 4873:4873 verdaccio/verdaccio`
+
+3. Run `npm adduser --registry {registry}` - where `{registry}` is registry path (`http://localhost:4873` for example).
+Then add username/password/email.
+
+
+## Packing library and publishing to Verdaccio
+1. Add description and author for library in `package.json`, like this:
    `"description": "Test library", "author": "Roman Yanchuk"`.
 
-3. Add `npm publish` configuration for library:
+2. Add `npm publish` configuration for library:
    In `package.json` add info about registry.
-   `"publishConfig": { "registry": "{registry-path}" }`.
-   Where `{registry-path}` is URL path to package registry. For example, `https://npm.pkg.github.com/` if you use a `GitHub Packages`.
+   `{ "publishConfig": { "registry": "{registry}" } }`,
+   where `{registry}` is registry path (`http://localhost:4873` for example).
 
-4. Add info about `Repository` like this:
-   `"repository": { "type": "git", "url": "{path}" }`.
-   Where `{path}` is path to repository where you want to publish a package. For example, `git://github.com/RomanYanchuk/packages.git`.
-5. Run `ng build {library} --prod`, where `{library}` is name of library. For example `TestLibrary`.
+3. Run `ng build {library} --prod`, where `{library}` is name of library. For example `TestLibrary`.
 
-6. Run `npm login --registry={registry_url} --scope=@{organization}`, where `{organization}` is path to organization (or user), where you want to publish. For example, `romanyanchuk`. And {registry_url}`is`package registry`path. For example`https://npm.pkg.github.com`.
+4. Run `cd dist/{library}`, `npm pack`.
 
-7. Run `cd dist/library`, `npm pack`.
-
-8. Run `npm publish`.
-
+5. Run `npm publish`.
 
 ## When package updated
 
 Change version of the package if update is needed - `npm version 0.0.0`, where replace 0.0.0 by new version.
 Or you can do it manually in `package.json` before build.
 
-
 ## Install package from repository
-Run `npm install @{organization}/{package}@{version}`, where `{organization}` is path to organization (or user), where you published, `{package}` is name of package, `{version}` is version of package in format `0.0.0`. 
-For example, `npm install @romanyanchuk/test-library@0.0.1`.
+
+Run `npm install {package} --{registry}`, `{package}` is name of package, `{registry}` is registry path (`http://localhost:4873` for example).
+For example, `npm install test-library.
